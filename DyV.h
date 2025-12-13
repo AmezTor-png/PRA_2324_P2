@@ -99,8 +99,8 @@ template<typename T>
 void quickSortPiFirst(std::vector<T> &v, int ini, int fin){
     if(ini < fin){
         T pi = partitionPiFirst(v, ini, fin);
-        quickSortPiFirst(v, ini, pi-1);
-        quickSortPiFirst(v, pi+1, fin);
+        quickSortPiFirst(v, ini, pi - 1);
+        quickSortPiFirst(v, pi + 1, fin);
     }
 }
 
