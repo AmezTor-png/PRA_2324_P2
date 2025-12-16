@@ -1,148 +1,66 @@
 #ifndef DYV_H
 #define DYV_H
 
-#include<vector>
-#include<iostream>
+#include <vector>
+#include <algorithm>
 
-template<typename T>
-int BusquedaBinaria(T x, std::vector<T> v, int ini, int fin)
+template <typename T>
+int BusquedaBinaria(T x, const std::vector<T>& v, int ini, int fin)
 {
-	if (ini > fin){
-		return -1;
-	}
-	
-	int medio=(ini+fin)/2;
-	
-	if (v.at(medio) == x)
-	{
-		return medio;
-	}
-	else if (v.at(medio) > x)
-	{	
-		return BusquedaBinaria(x, v, ini, medio - 1);
-	}
-	else
-	{
-		return BusquedaBinaria(x, v, medio + 1, fin);
-	}
+    if (ini > fin) return -1;
+
+    int medio = (ini + fin) / 2;
+
+    if (v[medio] == x)
+        return medio;
+    else if (v[medio] > x)
+        return BusquedaBinaria(x, v, ini, medio - 1);
+    else
+        return BusquedaBinaria(x, v, medio + 1, fin);
 }
 
-template<typename T>
-int BusquedaBinaria_INV(T x, std::vector<T> &v, int ini, int fin)
+template <typename T>
+int BusquedaBinaria_INV(T x, const std::vector<T>& v, int ini, int fin)
 {
-	if (ini > fin)
-	{
-		return -1;
-	}
-	
-	int medio = (ini + fin)/2;
-	if(v.at(medio) == x)
-	{
-		return medio;
-	}
-	else if(v.at(medio ) < x){
-		
-		return BusquedaBinaria_INV(x, v, ini ,medio - 1);
-	}
-	else
-	{
-		return BusquedaBinaria_INV(x, v, medio + 1, fin);
-	}
+    if (ini > fin) return -1;
+
+    int medio = (ini + fin) / 2;
+
+    if (v[medio] == x)
+        return medio;
+    else if (v[medio] < x)
+        return BusquedaBinaria_INV(x, v, ini, medio - 1);
+    else
+        return BusquedaBinaria_INV(x, v, medio + 1, fin);
 }
 
-template<typename T>
-void swap(T &a, T &b)
+template <typename T>
+int Partition(std::vector<T>& v, int ini, int fin)
 {
-    T temp = a;
-    a = b;
-    b = temp;
-}
-
-template<typename T>
-int partitionPiLast(std::vector<T> &v,int ini, int fin){
     T pivot = v[fin];
-    int i = ini - 1;
-    for(int j = ini; j < fin; j++)
-	{
-        if(v[j] <= pivot)
-		{
-            i++;
-            swap(v[i], v[j]);
-        }
-    }
-    swap(v[i + 1], v[fin]);
-    return i + 1;
-}
-
-template<typename T>
-void quickSortPiLast(std::vector<T> &v, int ini, int fin){
-    if(ini < fin)
-	{
-        T pi=partitionPiLast(v, ini, fin);
-        quickSortPiLast(v, ini, pi - 1);
-        quickSortPiLast(v, pi + 1, fin);
-    }
-}
-
-template<typename T>
-int partitionPiFirst(std::vector<T> &v,int ini, int fin){
-    T pivot = v[ini];
-    int i = ini + 1;
-    for(int j = ini + 1; j <= fin; j++){
-        if(v[j]<pivot){
-            swap(v[i],v[j]);
-            i++;
-        }
-    }
-    swap(v[ini], v[i - 1]);
-    return i - 1;
-}
-
-template<typename T>
-void quickSortPiFirst(std::vector<T> &v, int ini, int fin){
-    if(ini < fin){
-        T pi = partitionPiFirst(v, ini, fin);
-        quickSortPiFirst(v, ini, pi - 1);
-        quickSortPiFirst(v, pi + 1, fin);
-    }
-}
-
-template<typename T>
-int partitionPiCentral(std::vector<T> &v,int ini, int fin){
-    int mid = (ini + fin)/2;
-    T pivot = v[mid];
     int i = ini;
-    int j = fin;
-    while (true)
+
+    for (int j = ini; j < fin; ++j)
 	{
-        while (v[i] < pivot)
+        if (v[j] <= pivot)
 		{
-				i++;
-		}
-		
-        while (v[j] > pivot) 
-		{
-			j--;
-		}
-		
-        if (i >= j)
-		{
-            return j;
-		}
-        
-		swap(v[i], v[j]);
-        i++;
-        j--;
+            std::swap(v[i], v[j]);
+            i++;
+        }
     }
+
+std::swap(v[i], v[fin]);
+    return i;
 }
 
-template<typename T>
-void quickSortPiCentral(std::vector<T> &v, int ini, int fin){
-    if(ini < fin)
+template <typename T>
+void QuickSort(std::vector<T>& v, int ini, int fin)
+{
+    if (ini < fin)
 	{
-        T pi=partitionPiCentral(v, ini,  fin);
-        quickSortPiCentral(v, ini, pi);
-        quickSortPiCentral(v, pi + 1, fin);
+        int pivot = Partition(v, ini, fin);
+        QuickSort(v, ini, pivot - 1);
+        QuickSort(v, pivot + 1, fin);
     }
 }
 
