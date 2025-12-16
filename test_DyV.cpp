@@ -13,11 +13,11 @@ int main(){
 	
 	cout<< bb << endl;
 
-	quickSortPiFirst(b, 0, 3);
+	QuickSort(v2, 0, 3);
 
 	for(int i = 0; i < 4; i++)
-  {
-	  cout << b[i] << " ";
+  	{
+	  cout << v2[i] << " ";
 	}
   
   return 0;
