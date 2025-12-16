@@ -1,3 +1,6 @@
+#ifndef DYV_H
+#define DYV_H
+
 #include<vector>
 #include<iostream>
 
@@ -142,3 +145,5 @@ void quickSortPiCentral(std::vector<T> &v, int ini, int fin){
         quickSortPiCentral(v, pi + 1, fin);
     }
 }
+
+#endif
